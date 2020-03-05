@@ -22,7 +22,7 @@
 <!-- <aside>
 <h1>Side Bar</h1>    
 </aside>     -->
-          <form action="#" method="get" enctype="multipart/form-data" >
+          <form action="#" method="post" enctype="multipart/form-data" >
             
             <label>Product Name : </label>
             <input type="text" name="txt_productname"> <br><br>
@@ -37,19 +37,29 @@
              <label>Deductions : </label>
             <input type="text" name="deductions">  -->
            <br><br>
-           <input type="submit">
-
+           <!-- <input type="submit"> -->
+           <button type="submit" name="btn_register" value="registerd">Register</button>
            
           </form>
 
-
-        <!-- <article class="main">
+          <br><br><br><br>
+        <article class="main">
             
                     
            
-             <div id="home-image">
-            </div> 
-        </article> -->
+            <table border=1 >
+                <thead>
+                <th  style="width: 100px;">ID</th>
+                <th  style="width: 200px;">Product Name</th>
+                <th  style="width: 153px;">Color</th>
+                <th  style="width: 153px;">Price</th>
+                  <th  style="width: 150px;">Action</th>
+                </thead>
+                <tbody>
+                
+                </tbody>
+            </table>
+        </article>
 
         <br><br><br><br><br><br><br><br><br><br><br><br>
         <footer class="footer">
@@ -66,23 +76,28 @@
 
 
 <?php
-   $servername="mydemoserveractivity.mysql.database.azure.com";
-   $username="myadmin@mydemoserveractivity";
-   $password="Admin123";
-   $database="azureactivity3db";
+//    $servername="mydemoserveractivity.mysql.database.azure.com";
+//    $username="myadmin@mydemoserveractivity";
+//    $password="Admin123";
+//    $database="azureactivity3db";
+   $servername="localhost";
+   $username="root";
+   $password="";
+   $database="azureactivity3";
+
 
    $con = mysqli_connect($servername,$username,$password,$database);
 
    if($_POST)
    {
-       if($_POST["btn_register"] == "registerd")
+       if($_POST["btn_register"])
        {
-           $name=$_POST['txt_fullname'];
-           $user_username =$_POST['txt_username'];
-           $user_password =$_POST['txt_password'];
-           $confimation_password = $_POST['txt_confirmpassword'];
+           $productname=$_POST['txt_productname'];
+           $color =$_POST['txt_color'];
+           $price =$_POST['txt_price'];
+      
            
-           $query = "insert into user(user_name,user_username,user_password) values ('$name','$user_username','$user_password')";
+           $query = "insert into products(ProductName,Color,Price) values ('$productname','$color','$price')";
 
 
            if(!$con)
@@ -90,56 +105,16 @@
               
                die("connection error");
            }
+           if(mysqli_query($con, $query))
+            {
+             mysqli_close($con);
+             
+             echo "<script> alert('Successfully Saved!')</script>";
+             echo "<script> window.location.href='index.php'</script>";
 
-//            if($user_password == $confimation_password)
-//            {
-//             if(mysqli_query($con, $query))
-//             {
-//              mysqli_close($con);
-//              echo "<script> window.location.href='index.php'</script>";
-            
+            }
 
-// //               //nexmo start
-
-// //               include ( "src/NexmoMessage.php" );
-              
-// //               $msg="Hello Admin! There is a new registered user named ".$name;
-
-// //               /**
-// //                * To send a text message.
-// //                *
-// //                */
-            
-// //               // Step 1: Declare new NexmoMessage.
-// //               $nexmo_sms = new NexmoMessage('42c6fcf1', 'PognbGIED570DB58');
-            
-// //               // Step 2: Use sendText( $to, $from, $message ) method to send a message. 
-// //               $info = $nexmo_sms->sendText( '+639095539191', 'Admin', $msg );
-            
-// //               // Step 3: Display an overview of the message
-// //              // echo $nexmo_sms->displayOverview($info);
-            
-// //               // Done!
-            
-
-// //               //nexmo end
-
-
-
-
-//             }else
-//             {
-//                echo "<script>alert('account username is exist')</script>";
-//             }
-//            }else
-//            {
-//             echo "<script>alert('Password does not match')</script>";
-//            }
-                  
                              
-        }else
-        {
-            echo "error";
         }
    }
 ?>
